@@ -38,3 +38,9 @@ jobs:
           RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }}
         run: |
           python notion_automation.py
+      - name: 📂 Debug charts folder
+        run: |
+              pwd
+              ls -la
+              echo "---- charts ----"
+              ls -la charts || echo "charts folder missing"    
