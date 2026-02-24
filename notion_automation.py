@@ -146,11 +146,30 @@ def push_daily_matrix(ws, date_str, tag_data):
 
 # ================== CHART ==================
 def create_vertical_bar_chart(data):
+    max_color="#1f6f6f"
+    min_color="#9fc8c8"
+    normal_color="#54a1a1"
     data = {k: v for k, v in data.items() if v > 0}
     data = dict(sorted(data.items(), key=lambda x: x[1], reverse=True))
 
     labels = list(data.keys())
     values = list(data.values())
+
+
+    
+   
+    max_val = max(values)
+    min_val = min(values)
+
+    # ---- assign colors dynamically ----
+    colors = []
+    for v in values:
+        if v == max_val:
+            colors.append(max_color)
+        elif v == min_val:
+            colors.append(min_color)
+        else:
+            colors.append(normal_color)
 
     fig, ax = plt.subplots(figsize=(10, 6))
     ax.bar(labels, values)
@@ -158,7 +177,8 @@ def create_vertical_bar_chart(data):
     ax.set_title(f"Time Utilization – {DATA_DATE}")
     ax.set_ylabel("Hours")
     ax.set_xlabel("Activity")
-
+    fig.patch.set_facecolor("#E9F5DB")
+    ax.set_facecolor("#E9F5DB")
     ax.set_xticks(range(len(labels)))
     ax.set_xticklabels(labels, rotation=45, ha="right")
 
