@@ -1,5 +1,8 @@
 import requests
+import matplotlib
+matplotlib.use("Agg")   # 🔥 REQUIRED for GitHub Actions
 import matplotlib.pyplot as plt
+
 import pandas as pd
 import yagmail
 import gspread
@@ -216,6 +219,7 @@ def create_vertical_bar_chart(
     png = f"charts/{date}.png"
     pdf = f"charts/{date}.pdf"
 
+    
     plt.tight_layout()
     plt.savefig(png, dpi=150, bbox_inches="tight", facecolor=fig.get_facecolor())
     plt.savefig(pdf, bbox_inches="tight", facecolor=fig.get_facecolor())
