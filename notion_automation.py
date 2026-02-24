@@ -213,7 +213,7 @@ def create_vertical_bar_chart(
     ax.tick_params(axis="y", labelsize=7)
     ax.grid(axis="y", linestyle="-", alpha=0.2)
 
-
+    print("📂 CWD:", os.getcwd())
     # ---- save ----
     os.makedirs("charts", exist_ok=True)
     png = f"charts/{date}.png"
@@ -225,6 +225,7 @@ def create_vertical_bar_chart(
     plt.savefig(pdf, bbox_inches="tight", facecolor=fig.get_facecolor())
     plt.close()
 
+    assert os.path.exists(chart_png), f"❌ PNG not created: {chart_png}"
     print(f"📊 Vertical bar chart saved → {png}")
     print(f"📄 PDF saved → {pdf}")
 
