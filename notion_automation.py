@@ -272,16 +272,16 @@ def reset_table(today, pages):
     now = datetime.now()
     reset_time = time(3, 0)  # ⏰ 03:00 AM
 
+    print("Today date => ",now)
     week_start_str = pages[0]["properties"]["Week Start"]["date"]["start"]
     week_start = datetime.fromisoformat(week_start_str).date()
 
     next_week_start = week_start + timedelta(days=7)
+    print("next errk reset date => ",next_week_start)
 
-    # 🔒 one-time guard (Notion property)
-    reset_done = pages[0]["properties"]["Week Reset Done"]["checkbox"]
-
+ 
     if (
-        today == next_week_start
+        today >= next_week_start
         and now.time() >= reset_time
         and not reset_done
     ):
@@ -292,7 +292,7 @@ def reset_table(today, pages):
         for page in pages:
             reset_props = {
                 "Week Start": {"date": {"start": new_week_start}},
-                "Week Reset Done": {"checkbox": True}
+               
             }
 
             for chk, sel in DAYS.items():
@@ -310,7 +310,7 @@ def reset_table(today, pages):
             f"Today={today} | "
             f"ResetOn={next_week_start} | "
             f"Time={now.strftime('%H:%M')} | "
-            f"Done={reset_done}"
+            # f"Done={reset_done}"
         )
 #  =============== Main ===============   
 def main():
