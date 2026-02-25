@@ -37,7 +37,7 @@ RUN_DATE = NOW.date().isoformat()                 # today (logs only)
 DATA_DATE = (NOW - timedelta(days=1)).date().isoformat()  # 🔥 yesterday (chart + email)
 
 DAY_NAME = (NOW - timedelta(days=1)).strftime("%A")
-
+FORMATTED_DATE = datetime.strptime(DATA_DATE, "%Y-%m-%d").strftime("%d-%m-%Y")
 print(f"📅 Run Date : {RUN_DATE}")
 print(f"📊 Data Date: {DATA_DATE}")
 print(f"📅 Day Name : {DAY_NAME}")
@@ -227,7 +227,7 @@ Hello,
 
 This is your automated daily report.
 
-📅 Date: {DATA_DATE}, {DAY_NAME}
+📅 Date: {DAY_NAME}, {FORMATTED_DATE}
 
 Regards,
 🤖 Automation
