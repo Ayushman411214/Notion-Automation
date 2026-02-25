@@ -177,7 +177,7 @@ def create_vertical_bar_chart(data):
     ax.set_facecolor("#E9F5DB")
     bars = ax.bar(labels, values,width=0.5,color=colors,edgecolor="none")
 
-      for bar in bars:
+    for bar in bars:
         height = bar.get_height()
         ax.text(
             bar.get_x() + bar.get_width() / 4,
