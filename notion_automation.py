@@ -175,7 +175,7 @@ def create_vertical_bar_chart(data):
     fig, ax = plt.subplots(figsize=(10, 6))
     fig.patch.set_facecolor("#E9F5DB")
     ax.set_facecolor("#E9F5DB")
-    bars = ax.bar(labels, values,width=0.5,color=colors,edgecolor="none")
+    bars = ax.bar(labels, values,width=0.4,color=colors,edgecolor="none")
 
     for bar in bars:
         height = bar.get_height()
