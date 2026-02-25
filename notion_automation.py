@@ -149,6 +149,7 @@ def create_vertical_bar_chart(data):
     max_color="#1f6f6f"
     min_color="#9fc8c8"
     normal_color="#54a1a1"
+    
     data = {k: v for k, v in data.items() if v > 0}
     data = dict(sorted(data.items(), key=lambda x: x[1], reverse=True))
 
@@ -172,24 +173,39 @@ def create_vertical_bar_chart(data):
             colors.append(normal_color)
 
     fig, ax = plt.subplots(figsize=(10, 6))
-    ax.bar(labels, values)
-
-    ax.set_title(f"Time Utilization – {DATA_DATE}")
-    ax.set_ylabel("Hours")
-    ax.set_xlabel("Activity")
     fig.patch.set_facecolor("#E9F5DB")
     ax.set_facecolor("#E9F5DB")
-    ax.set_xticks(range(len(labels)))
-    ax.set_xticklabels(labels, rotation=45, ha="right")
+    bars = ax.bar(labels, values,width=0.5,color=colors,edgecolor="none")
 
+      for bar in bars:
+        height = bar.get_height()
+        ax.text(
+            bar.get_x() + bar.get_width() / 4,
+            height + 0.1,
+            f"{height:.1f}h",
+            ha="center",
+            va="bottom",
+            fontsize=8
+        )
+    total_time = sum(data.values())
+    free = data.get("Free / Unused", 0)
+    ax.set_title(f"Today Time Utilization : {total_time - free} hrs",pad=15,fontsize=14)
+    
+    ax.set_ylabel("Hours",fontsize=8)
+    ax.set_xlabel("Activity",fontsize=8)
+
+    ax.set_xticks(range(len(labels)))
+    ax.set_xticklabels(labels, rotation=45, ha="right",fontsize=7)
+    ax.tick_params(axis="y", labelsize=7)
     os.makedirs("charts", exist_ok=True)
+    ax.grid(axis="y", linestyle="-", alpha=0.2)
 
     png = f"charts/{DATA_DATE}.png"
     pdf = f"charts/{DATA_DATE}.pdf"
 
     plt.tight_layout()
-    plt.savefig(png)
-    plt.savefig(pdf)
+    plt.savefig(png, dpi=150, bbox_inches="tight", facecolor=fig.get_facecolor())
+    plt.savefig(pdf, bbox_inches="tight", facecolor=fig.get_facecolor())
     plt.close()
 
     assert os.path.exists(pdf), f"❌ Chart not created: {pdf}"
