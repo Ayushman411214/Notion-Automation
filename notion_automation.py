@@ -227,7 +227,7 @@ Hello,
 
 This is your automated daily report.
 
-📅 Date: {DATA_DATE}
+📅 Date: {DATA_DATE}, {DAY_NAME}
 
 Regards,
 🤖 Automation
