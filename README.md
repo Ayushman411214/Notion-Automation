@@ -1,3 +1,65 @@
+# Notion Automation Script
+
+## 📝 Project Overview
+
+This is a Python script that automates tracking time blocks from a **Notion Database** and exports the data to a **Google Sheet**. It also generates a visual **Time Utilization Chart** and emails a daily report to a designated address.
+
+The script relies on a specific layout in your Notion database, a Google Cloud Service Account for accessing Google Sheets, and a standard `.env` configuration file for tokens.
+
+## ✨ Features
+
+- **Fetches data from Notion:** Automates reading time-block events in a specific Database.
+- **Syncs with Google Sheets:** Appends or updates daily metrics seamlessly to a Google Sheet.
+- **Visual Charting:** Automatically renders a bar chart for daily time utilization tracking (saved as PNG/PDF).
+- **Automated Email Reports:** Sends a PDF version of the time utilization chart to a specified email account.
+- **Weekly Rest:** Optionally resets the table columns for the next week automatically on the configured reset time.
+
+---
+
+## 🛠️ Environment Setup
+
+You need to provide your tokens and configuration details. Use `.env.example` as a template and rename it to `.env`:
+
+```env
+NOTION_TOKEN="secret_..."              # Integration token from Notion (Internal Integration)
+TIME_BLOCK_DB="..."                    # ID of your Notion Database
+
+SPREADSHEET_ID="..."                   # ID of your target Google Sheet
+DAILY_SHEET="Sheet1"                   # Tab/Worksheet name in Google Sheets
+
+SENDER_EMAIL="your_email@gmail.com"    # Gmail address to send reports from
+APP_PASSWORD="abcd efgh ijkl mnop"     # Gmail App Password
+RECEIVER_EMAIL="recipient@gmail.com"   # Where to send the daily report
+```
+
+---
+
+## 📅 Notion Database Setup
+
+The script expects your Notion Database (defined by `TIME_BLOCK_DB`) to have the following properties:
+
+1. **`Week Start`**: A **Date** property.
+2. **Checkbox Properties**: Must be named exactly:
+   - `Mon`
+   - `Tue`
+   - `Wed`
+   - `Thu`
+   - `Fri`
+   - `Sat`
+   - `Sun`
+3. **Select Properties**: Must be named exactly:
+   - `Monday`
+   - `Tuesday`
+   - `Wednesday`
+   - `Thursday`
+   - `Friday`
+   - `Saturday`
+   - `Sunday`
+
+When parsing logic runs, it uses the first 3 letters of the actual day to check the Checkbox property (e.g. `Mon`) and maps to the Select property (e.g. `Monday`) to aggregate the tag count.
+
+---
+
 # 🔐 Google Service Account Setup
 
 This project uses a **Google Service Account** to access Google Sheets securely.
