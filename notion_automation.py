@@ -125,7 +125,7 @@ def push_daily_matrix(ws, date_str, tag_data):
         if tag not in headers:
             headers.append(tag)
 
-    ws.update("A1", [headers])
+    ws.update(values=[headers], range_name="A1")
 
     dates = ws.col_values(1)
     if date_str in dates:
@@ -156,9 +156,10 @@ def create_vertical_bar_chart(data):
     labels = list(data.keys())
     values = list(data.values())
 
+    if not values:
+        print("⚠️ No data to chart.")
+        return
 
-    
-   
     max_val = max(values)
     min_val = min(values)
 
@@ -180,7 +181,7 @@ def create_vertical_bar_chart(data):
     for bar in bars:
         height = bar.get_height()
         ax.text(
-            bar.get_x() + bar.get_width() / 4,
+            bar.get_x() + bar.get_width() / 2,
             height + 0.1,
             f"{height:.1f}h",
             ha="center",
